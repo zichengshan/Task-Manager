@@ -25,36 +25,51 @@ const User = mongoose.model('User', {
                 throw new Error('Age must be a positive number')
             }
         }
+    },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 7,
+        validate(value){
+            if(value.toLowerCase().includes('password')){
+                throw new Error('Password cannot contain "password"')
+            }
+        }
     }
 })
 
 const Task = mongoose.model('Task', {
     description: {
-        type: String
+        type: String,
+        required: true,
+        trim: true
     },
     completed: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 })
 
 const user = new User({
     name: 'Zicheng',
-    email: 'zicheng@gmail.com'
+    email: 'zichengshan@gmail.com',
+    age: 17,
+    password: '2342352421'
 })
 
 user.save().then((result) => {
     console.log('Success')
 }).catch((error) => {
-    console.log('Failure')
+    console.log(error)
 })
 
-// const task = new Task({
-//     description: 'Leetcode Questions',
-//     completed: true
-// })
+const task = new Task({
+    description: 'Input for testing.'
+})
 
-// task.save().then((result) => {
-//     console.log(result)
-// }).catch((error) => {
-//     console.log('Error')
-// })
+task.save().then((result) => {
+    console.log(result)
+}).catch((error) => {
+    console.log('Error')
+})
