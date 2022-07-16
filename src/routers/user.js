@@ -1,4 +1,5 @@
 const express = require('express')
+const { findByIdAndUpdate } = require('../models/user')
 const User = require('../models/user')
 const router = new express.Router()
 
@@ -46,7 +47,6 @@ router.get('/users', async (req, res) => {
     }
 
     try {
-        
         const user = await User.findById(req.params.id)
 
         updates.forEach((update) => user[update] = req.body[update])
